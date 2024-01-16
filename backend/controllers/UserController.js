@@ -31,14 +31,14 @@ const register = async (req, res) => {
 
     // Create user
     const newUser = await User.create({
-        name, 
+        name,
         email,
         password: passwordHash
     })
 
     // If user was created successfully, return the token
-    if(!newUser) {
-        res.status(422).json({errors: ["There's been an error, please try again later."]})
+    if (!newUser) {
+        res.status(422).json({ errors: ["There's been an error, please try again later."] })
         return
     }
 
@@ -46,9 +46,14 @@ const register = async (req, res) => {
         _id: newUser._id,
         token: generateToken(newUser._id)
     })
+}
 
+// Sign user in
+const login = (req, res) => {
+    res.send("Login")
 }
 
 module.exports = {
     register,
+    login,
 }
