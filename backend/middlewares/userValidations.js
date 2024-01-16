@@ -15,20 +15,34 @@ const userCreateValidation = () => {
         body("password")
             .isString()
             .withMessage("The password is mandatory.")
-            .isLength({min: 5})
+            .isLength({ min: 5 })
             .withMessage("The password must have at least 5 characters."),
         body("confirmpassword")
             .isString()
             .withMessage("The password confirmation is mandatory.")
-            .custom((value, {req}) => {
-                if(value != req.body.password) {
+            .custom((value, { req }) => {
+                if (value != req.body.password) {
                     throw new Error("The passwords do not match.")
                 }
                 return true
             })
-        ]
+    ]
+}
+
+const loginValidation = () => {
+    return [
+        body("email")
+            .isString()
+            .withMessage("The e-mail is mandatory.")
+            .isEmail()
+            .withMessage("Insert a valid e-mail."),
+        body("password")
+            .isString()
+            .withMessage("The password is mandatory.")
+    ]
 }
 
 module.exports = {
     userCreateValidation,
+    loginValidation,
 }
