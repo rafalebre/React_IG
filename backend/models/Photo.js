@@ -9,7 +9,7 @@ const photoSchema = new Schema({
     userId: mongoose.ObjectId,
     userName: String,
 }, {
-    timeseries: true
+    timestamps: true
 })
 
 const Photo = mongoose.model("Photo", photoSchema)
