@@ -27,7 +27,7 @@ const insertPhoto = async (req, res) => {
   // If user was photo sucessfully, return data
   if (!newPhoto) {
     res.status(422).json({
-      errors: ["Houve um erro, por favor tente novamente mais tarde."],
+      errors: ["There's been an error, please try againa later."],
     });
     return;
   }
@@ -45,7 +45,7 @@ const deletePhoto = async (req, res) => {
 
   // Check if photo exists
   if (!photo) {
-    res.status(404).json({ errors: ["Foto não encontrada!"] });
+    res.status(404).json({ errors: ["Picture not found!"] });
     return;
   }
 
@@ -53,7 +53,7 @@ const deletePhoto = async (req, res) => {
   if (!photo.userId.equals(reqUser._id)) {
     res
       .status(422)
-      .json({ errors: ["Ocorreu um erro, tente novamente mais tarde"] });
+      .json({ errors: ["There's been an error, please try againa later."] });
     return;
   }
 
@@ -61,7 +61,7 @@ const deletePhoto = async (req, res) => {
 
   res
     .status(200)
-    .json({ id: photo._id, message: "Foto excluída com sucesso." });
+    .json({ id: photo._id, message: "Picture successfully excluded." });
 };
 
 // Get all photos
@@ -92,7 +92,7 @@ const getPhotoById = async (req, res) => {
 
   // Check if photo exists
   if (!photo) {
-    res.status(404).json({ errors: ["Foto não encontrada!"] });
+    res.status(404).json({ errors: ["Picture not found!"] });
     return;
   }
 
