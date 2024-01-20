@@ -64,8 +64,8 @@ const login = async (req, res) => {
     }
 
     //Check if password matches
-    if(!(await bcrypt.compare(password, user.password))) {
-        res.status(422).json({errors: ["Invalid password."]})
+    if (!(await bcrypt.compare(password, user.password))) {
+        res.status(422).json({ errors: ["Invalid password."] })
         return
     }
 
@@ -78,7 +78,7 @@ const login = async (req, res) => {
 }
 
 // Get current logged in user
-const getCurrentUser = async(req, res) => {
+const getCurrentUser = async (req, res) => {
     const user = req.user
 
     res.status(200).json(user)
@@ -86,13 +86,13 @@ const getCurrentUser = async(req, res) => {
 
 // Update an user
 const update = async (req, res) => {
-    
-    const {name, password, bio} = req.body
+
+    const { name, password, bio } = req.body
 
     let profileImage = null
 
-    if(req.file) {
-        profileImage = req.file.filename 
+    if (req.file) {
+        profileImage = req.file.filename
     }
 
     const reqUser = req.user
@@ -101,11 +101,11 @@ const update = async (req, res) => {
 
 
 
-    if(name) {
+    if (name) {
         user.name = name
     }
 
-    if(password) {
+    if (password) {
         // Generate password hash
         const salt = await bcrypt.genSalt()
         const passwordHash = await bcrypt.hash(password, salt)
@@ -113,11 +113,11 @@ const update = async (req, res) => {
         user.password = passwordHash
     }
 
-    if(profileImage) {
+    if (profileImage) {
         user.profileImage = profileImage
     }
 
-    if(bio) {
+    if (bio) {
         user.bio = bio
     }
 
@@ -127,9 +127,33 @@ const update = async (req, res) => {
 
 }
 
+// Get user by id
+const getUserById = async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+        const user = await User.findById(mongoose.Types.ObjectId(id)).select("-password")
+
+        // Check if user exists
+        if (!user) {
+            res.status(404).json({ errors: ["User not found ."] })
+            return
+        }
+
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(404).json({ errors: ["User not found."] })
+        return
+    }
+
+
+}
+
 module.exports = {
     register,
     login,
     getCurrentUser,
-    update
+    update,
+    getUserById,
 }
