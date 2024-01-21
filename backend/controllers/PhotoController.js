@@ -100,69 +100,69 @@ const getPhotoById = async (req, res) => {
 };
 
 // Update a photo
-const updatePhoto = async(req, res) => {
+const updatePhoto = async (req, res) => {
 
-  const {id} = req.params
-  const {title} = req.body
+  const { id } = req.params
+  const { title } = req.body
 
   const reqUser = req.user
   const photo = await Photo.findById(id)
 
   //Check if photo exists
-  if(!photo) {
-    res.status(404).json({errors: ["Picture not found."]})
+  if (!photo) {
+    res.status(404).json({ errors: ["Picture not found."] })
     return
   }
 
   // Check if photo belongs to user
-  if(!photo.userId.equals(reqUser._id)) {
-    res.status(422).json({errors: ["There's been an error, please try again later."]})
+  if (!photo.userId.equals(reqUser._id)) {
+    res.status(422).json({ errors: ["There's been an error, please try again later."] })
     return
   }
-  
-  if(title) {
+
+  if (title) {
     photo.title = title
   }
   await photo.save()
 
-  res.status(200).json({ photo, message: "Picture successfully updated."})
+  res.status(200).json({ photo, message: "Picture successfully updated." })
 
 }
 
 // Like functionality
-const likePhoto = async(req, res) => {
+const likePhoto = async (req, res) => {
 
-  const {id} = req.params
+  const { id } = req.params
 
   const reqUser = req.user
 
   const photo = await Photo.findById(id)
 
-//Check if photo exists
-if(!photo) {
-  res.status(404).json({errors: ["Picture not found."]})
-  return
-}
+  //Check if photo exists
+  if (!photo) {
+    res.status(404).json({ errors: ["Picture not found."] })
+    return
+  }
 
-// Check if user already liked the photo
-if(photo.likes.includes(reqUser._id)) {
-  res.status(422).json({errors: "You already liked this photo."})
-  return
-}
+  // Check if user already liked the photo
+  if (photo.likes.includes(reqUser._id)) {
+    res.status(422).json({ errors: "You already liked this photo." })
+    return
+  }
 
-// Put user id in likes array
-photo.likes.push(reqUser._id)
+  // Put user id in likes array
+  photo.likes.push(reqUser._id)
 
-photo.save()
+  photo.save()
 
-res.status(200).json({photoId: id, userId: reqUser._id, message: "You liked the picture."})
+  res.status(200).json({ photoId: id, userId: reqUser._id, message: "You liked the picture." })
 }
 
 // Comment functionality
-const commentPhoto = async(req, res) => {
+const commentPhoto = async (req, res) => {
 
-  const {id} = req.params
-  const {comment} = req.body
+  const { id } = req.params
+  const { comment } = req.body
 
   const reqUser = req.user
 
@@ -171,37 +171,48 @@ const commentPhoto = async(req, res) => {
   const photo = await Photo.findById(id)
 
   //Check if photo exists
-if(!photo) {
-  res.status(404).json({errors: ["Picture not found."]})
-  return
+  if (!photo) {
+    res.status(404).json({ errors: ["Picture not found."] })
+    return
+  }
+
+  // Add comment in the array of commnents
+  const userComment = {
+    comment,
+    userName: user.name,
+    userImage: user.profileImage,
+    userId: user._id
+  }
+
+  photo.comments.push(userComment)
+
+  await photo.save()
+
+  res.status(200).json({
+    comment: userComment,
+    message: "The comment was added successfully."
+  })
+
 }
 
-// Add comment in the array of commnents
-const userComment = {
-  comment,
-  userName: user.name,
-  userImage: user.profileImage,
-  userId: user._id
-}
+// Seach photos by title
+const searchPhotos = async(req, res) => {
 
-photo.comments.push(userComment)
+  const {q} = req.query
 
-await photo.save()
+  const photos = await Photo.find({title: new RegExp(q, "i")}).exec()
 
-res.status(200).json({
-  comment: userComment,
-  message: "The comment was added successfully."
-})
-
+  res.status(200).json(photos);
 }
 
 module.exports = {
-    insertPhoto,
-    deletePhoto,
-    getAllPhotos,
-    getUserPhotos,
-    getPhotoById,
-    updatePhoto,
-    likePhoto,
-    commentPhoto
+  insertPhoto,
+  deletePhoto,
+  getAllPhotos,
+  getUserPhotos,
+  getPhotoById,
+  updatePhoto,
+  likePhoto,
+  commentPhoto,
+  searchPhotos
 };
