@@ -68,11 +68,11 @@ const Register = () => {
           value={confirmPassword || ""} />
         {!loading && <input
           type="submit"
-          value="Register" /> }
-          {loading && <input
+          value="Register" />}
+        {loading && <input
           type="submit"
-          value="Wait..." disabled /> }
-          {error && <Message msg={error} type="error" />}
+          value="Wait..." disabled />}
+        {error && <Message msg={error} type="error" />}
       </form>
       <p>
         Already registered? <Link to="/login">Click here</Link>
