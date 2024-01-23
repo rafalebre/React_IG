@@ -7,12 +7,26 @@ import { BsSearch, BsHouseDoorFill, BsFillPersonFill, BsFillCameraFill } from "r
 // Hooks
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { UseDispatch, useSelector } from "react-redux";
+import { UseDispatch, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+// Redux
+import {logout, reset} from "../slices/authSlice"
 
 const Navbar = () => {
     const { auth } = useAuth()
     const { user } = useSelector((state) => state.auth)
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
+
+    const handleLogout = () => {
+        dispatch(logout())
+        dispatch(reset())
+
+        navigate("/login")
+    }
 
     return (
         <nav id="nav">
@@ -43,7 +57,7 @@ const Navbar = () => {
                                 </NavLink>
                             </li>
                             <li>
-                                <span>Logout</span>
+                                <span onClick={handleLogout}>Logout</span>
                             </li>
                         </>
                     ) : (
