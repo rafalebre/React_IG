@@ -72,7 +72,7 @@ export const userSlice = createSlice({
                 state.user = action.payload
                 state.message = "User successfully updated!"
             })
-            .addCase(updateProfile.rejected, (state, action) => {
+            .addCase(updateProfile.rejected, (state, action) => {  
                 state.loading = false
                 state.error = action.payload
                 state.user = {}
