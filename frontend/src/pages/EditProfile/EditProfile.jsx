@@ -66,7 +66,7 @@ const Profile = () => {
 
     formData.append("user", userFormData)
 
-    await dispatch(updateProfile(userFormData))
+    await dispatch(updateProfile(formData))
 
     setTimeout(() => {
       dispatch(resetMessage())
