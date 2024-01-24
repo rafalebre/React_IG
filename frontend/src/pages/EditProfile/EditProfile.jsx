@@ -1,18 +1,19 @@
 import "./EditProfile.css";
 
 const EditProfile = () => {
-  
+
   const handleSubmit = (e) => {
     e.preventDefault()
   }
 
+  return (
     <div id="edit-profile">
       <h2>Edit your data</h2>
       <p className="subtitle">Add a profile imange and tell a bit about yourself...</p>
       {/* preview da imagem */}
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Name" />
-        <input type="email" placeholder="E-mail" disabled/>
+        <input type="email" placeholder="E-mail" disabled />
         <label>
           <span>Profile Image:</span>
           <input type="file" />
@@ -28,7 +29,7 @@ const EditProfile = () => {
         <input type="submit" value="Update" />
       </form>
     </div>
-  
+  )
 }
 
 export default EditProfile
