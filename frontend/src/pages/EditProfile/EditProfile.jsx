@@ -4,15 +4,15 @@ import { uploads } from "../../utils/config";
 
 // Hooks
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // Redux
-import { profile, resetMessage, updateProfile } from "../../slices/userSlice"
+import { profile, updateProfile, resetMessage } from "../../slices/userSlice"
 
 //Components
 import Message from "../../components/Message"
 
-const EditProfile = () => {
+const Profile = () => {
   const dispatch = useDispatch()
 
   const { user, message, error, loading } = useSelector((state) => state.user)
@@ -45,10 +45,10 @@ const EditProfile = () => {
 
     // Gather user data from states
     const userData = {
-      name
+      name,
     }
     if(profileImage) {
-      userData.profileImage = profileImage
+      userData.profileImage = profileImage;
     }
 
     if(bio) {
@@ -125,4 +125,4 @@ const EditProfile = () => {
   )
 }
 
-export default EditProfile
+export default Profile
