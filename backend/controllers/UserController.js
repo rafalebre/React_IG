@@ -129,31 +129,33 @@ const update = async (req, res) => {
 
 // Get user by id
 const getUserById = async (req, res) => {
+    const { id } = req.params;
 
-    const { id } = req.params
-
-    try {
-        const user = await User.findById(mongoose.Types.ObjectId(id)).select("-password")
-
-        // Check if user exists
-        if (!user) {
-            res.status(404).json({ errors: ["User not found ."] })
-            return
-        }
-
-        res.status(200).json(user)
-    } catch (error) {
-        res.status(404).json({ errors: ["User not found."] })
-        return
+    // Validar se o ID é um ObjectId válido
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ errors: ["Invalid user ID."] });
     }
 
+    try {
+        const user = await User.findById(id).select("-password");
 
-}
+        if (!user) {
+            return res.status(404).json({ errors: ["User not found."] });
+        }
 
-module.exports = {
-    register,
-    login,
-    getCurrentUser,
-    update,
-    getUserById,
-}
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error); // Log do erro para depuração
+        res.status(500).json({ errors: ["Internal server error."] });
+    }
+};
+
+
+
+    module.exports = {
+        register,
+        login,
+        getCurrentUser,
+        update,
+        getUserById,
+    }
