@@ -36,7 +36,7 @@ const updateProfile = async(data, token) => {
 
 }
 
-// get user details
+// Get user details
 const getUserDetails = async (id) => {
 
     const config = requestConfig("GET")
@@ -58,7 +58,7 @@ const getUserDetails = async (id) => {
 const userService = {
     profile,
     updateProfile,
-    getUserDetails
+    getUserDetails,
 }
 
 export default userService
