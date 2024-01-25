@@ -47,6 +47,8 @@ const deletePhoto = async(id, token) => {
             .then((res) => res.json())
             .catch((err) => err)
 
+            return res
+
     } catch (error) {
         console.log(error)
     }
@@ -56,7 +58,7 @@ const deletePhoto = async(id, token) => {
 const photoService = {
     publishPhoto,
     getUserPhotos,
-    deletePhoto
+    deletePhoto,
 }
 
 export default photoService
