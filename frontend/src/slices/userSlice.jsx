@@ -45,6 +45,7 @@ export const updateProfile = createAsyncThunk(
 export const getUserDetails = createAsyncThunk(
     "user/get",
     async(id, thunkAPI) => {
+       
 
         const data = await userService.getUserDetails(id)
 
