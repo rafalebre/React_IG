@@ -1,6 +1,6 @@
 import "./Profile.css"
 
-import {uploads} from "../../utils/config"
+import { uploads } from "../../utils/config"
 
 // components
 import Message from "../../components/Message"
@@ -14,15 +14,20 @@ import { useParams } from "react-router-dom"
 
 // Redux
 import { getUserDetails } from "../../slices/userSlice"
+import { publishPhoto, resetMessage } from "../../slices/photoSlice"
 
 const Profile = () => {
 
-  const {id} = useParams()
+  const { id } = useParams()
 
   const dispatch = useDispatch()
 
-  const {user, loading} = useSelector((state) => state.user)
-  const {user: userAuth} = useSelector((state) => state.auth)
+  const { user, loading } = useSelector((state) => state.user)
+  const { user: userAuth } = useSelector((state) => state.auth)
+  const { photos, loading: loadingPhoto, message: messagePhoto, error: errorPhoto } = useSelector((state) => state.photo)
+
+  const [title, setTitle] = useState("")
+  const [image, setImage] = useState("")
 
   // New form and edit form refs
   const newPhotoForm = useRef()
@@ -31,15 +36,42 @@ const Profile = () => {
   // Load user data
   useEffect(() => {
 
-      dispatch(getUserDetails(id))
+    dispatch(getUserDetails(id))
 
   }, [dispatch, id])
 
-  const submitHandle = (e) => {
-    e.preventDefault()
+  const handleFile = (e) => {
+    // image preview
+    const image = e.target.files[0]
+    setImage(image)
   }
 
-  if(loading) {
+  const submitHandle = (e) => {
+    e.preventDefault()
+
+    const photoData = {
+      title,
+      image
+    }
+
+    // build form data
+    const formData = new FormData()
+
+    const photoFormData = Object.keys(photoData).forEach((key) => formData.append(key, photoData[key]))
+
+    formData.append("photo", photoFormData)
+
+    dispatch(publishPhoto(formData))
+
+    setTitle("")
+
+    setTimeout(() => {
+      dispatch(resetMessage())
+    }, 2000)
+
+  }
+
+  if (loading) {
     return <p>Loading...</p>
   }
 
@@ -59,17 +91,20 @@ const Profile = () => {
           <div className="new-photo" ref={newPhotoForm}>
             <h3>Share something:</h3>
             <form onSubmit={submitHandle}>
-            <label>
-              <span>Title for the picture:</span>
-              <input type="text" placeholder="Insert a title" />
-            </label>
-            <label>
-              <span>Image:</span>
-              <input type="file" />
-            </label>
-            <input type="submit" value="Post" />
+              <label>
+                <span>Title for the picture:</span>
+                <input type="text" placeholder="Insert a title" onChange={(e) => setTitle(e.target.value)} value={title || "" }/>
+              </label>
+              <label>
+                <span>Image:</span>
+                <input type="file" onChange={handleFile} />
+              </label>
+              {!loadingPhoto && <input type="submit" value="Post" />}
+              {loadingPhoto && <input type="submit" disabled value="Wait..." />}
             </form>
           </div>
+          {errorPhoto && <Message msg={errorPhoto} type="error"/> }
+          {messagePhoto && <Message msg={messagePhoto} type="success"/> }
         </>
       )}
     </div>
