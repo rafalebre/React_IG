@@ -48,6 +48,13 @@ To run the application:
 
 This project is open for use and modification. No formal license applied.
 
+
+## Screenshots
+
+![Login Page](/images/LoginHome.png)
+![Home Page](/images/Home.png)
+![Dashboard](/images/Dashboard.png)
+![Edit Profile Page](/images/EditProfileData.png)
 .
 .
 .
