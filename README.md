@@ -1,3 +1,62 @@
+# React IG
+
+## Description
+
+React IG is a simple social media platform inspired by Instagram, built to demonstrate my progress in learning React, Redux, and MongoDB. Users can post photos, share and like friends' photos, and add comments. This project provided me with the opportunity to practice using React with Redux for state management and MongoDB for the database, applying CSS effectively across different components, and experimenting with React's routing and hooks.
+
+## Installation
+
+**Prerequisites:**
+- Node.js installed on your local machine.
+- MongoDB account for database services.
+
+**Steps:**
+1. Clone the repository to your local machine: `git clone https://github.com/yourusername/React_IG.git`
+2. Navigate to the project directory: `cd React_IG`
+3. Install the dependencies for both frontend and backend:
+   - For backend: `cd backend` then `npm install`
+   - For frontend: `cd frontend` then `npm install`
+
+## Setup
+
+1. Create a `.env` file in the `backend` directory with the following content:
+   ```
+   PORT=3100
+   DB_USER=<your_mongoDB_username>
+   DB_PASS=<your_mongoDB_password>
+   JWT_SECRET=<your_jwt_secret>
+   ```
+   Replace `<your_mongoDB_username>`, `<your_mongoDB_password>`, and `<your_jwt_secret>` with your actual MongoDB credentials and JWT secret.
+
+2. MongoDB Setup: Follow the official MongoDB documentation to set up a new project and obtain your connection string (https://www.mongodb.com/docs/atlas/getting-started/).
+
+## Usage
+
+To run the application:
+- Start the backend server: `cd backend` then `npm run server`
+- In a new terminal, start the frontend application: `cd frontend` then `npm start`
+
+## Technologies Used
+
+- React for the frontend development.
+- Redux for state management.
+- MongoDB for the database.
+- Express.js as the backend framework.
+- Applied MVC (Model-View-Controller) architecture for backend API design.
+
+## License
+
+This project is open for use and modification. No formal license applied.
+
+.
+.
+.
+.
+.
+.
+.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
