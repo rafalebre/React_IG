@@ -7,7 +7,7 @@ import { BsSearch, BsHouseDoorFill, BsFillPersonFill, BsFillCameraFill } from "r
 // Hooks
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { UseDispatch, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // Redux
