@@ -1,5 +1,5 @@
-export const api = "http://localhost:3100/api"
-export const uploads = "http://localhost:3100/uploads"
+export const api = "https://react-ig.onrender.com/api"
+export const uploads = "https://react-ig.onrender.com/uploads"
 
 export const requestConfig = (method, data, token = null, image = null) => {
 
