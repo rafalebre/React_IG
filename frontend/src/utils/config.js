@@ -1,9 +1,10 @@
-export const api = "http://localhost:3100/api"
-export const uploads = "http://localhost:3100/uploads"
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3100";
+
+export const api = `${API_BASE_URL}/api`;
+export const uploads = `${API_BASE_URL}/uploads`;
 
 export const requestConfig = (method, data, token = null, image = null) => {
-
-    let config
+    let config;
 
     if (image) {
         config = {
@@ -31,5 +32,4 @@ export const requestConfig = (method, data, token = null, image = null) => {
     }
 
     return config
-
 }
