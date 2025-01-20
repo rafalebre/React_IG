@@ -13,10 +13,13 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 // solve CORS
-app.use(cors({ 
-    credentials: true, 
-    origin: process.env.FRONTEND_URL || "http://localhost:3000"
-  }))
+aapp.use(cors({ 
+  credentials: true, 
+  origin: [
+      "http://localhost:3000",
+      "https://react-ig-virid.vercel.app"
+  ]
+}))
 
 // Upload directory
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
