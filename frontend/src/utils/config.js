@@ -1,5 +1,5 @@
-export const api = "http://localhost:3100/api"
-export const uploads = "http://localhost:3100/uploads"
+export const api = import.meta.env.VITE_API_URL || "http://localhost:3100/api"
+export const uploads = import.meta.env.VITE_UPLOADS_URL || "http://localhost:3100/uploads"
 
 export const requestConfig = (method, data, token = null, image = null) => {
 
