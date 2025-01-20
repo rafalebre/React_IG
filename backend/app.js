@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 // solve CORS
-aapp.use(cors({ 
+app.use(cors({ 
   credentials: true, 
   origin: [
       "http://localhost:3000",
