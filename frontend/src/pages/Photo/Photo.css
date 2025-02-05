@@ -7,6 +7,11 @@
 
 #photo img {
     width: 100%;
+    max-width: 800px; /* limitar a largura máxima */
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
 }
 
 .message-container {
