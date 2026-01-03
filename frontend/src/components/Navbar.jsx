@@ -40,7 +40,7 @@ const Navbar = () => {
 
     return (
         <nav id="nav">
-            <Link to="/">ReactGram</Link>
+            <Link to="/">React_IG</Link>
             <form id="search-form" onSubmit={handleSearch}  >
                 <BsSearch />
                 <input type="text" placeholder="Search" onChange={(e) => setQuery(e.target.value)} />

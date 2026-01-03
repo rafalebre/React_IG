@@ -2,7 +2,7 @@ import "./Footer.css";
 const Footer = () => {
   return (
   <footer id="footer">
-    <p>ReactGram &copy; 2024</p>
+    <p>React_IG &copy; 2024</p>
   </footer>)
 }
 

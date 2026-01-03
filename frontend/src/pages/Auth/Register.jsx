@@ -41,7 +41,7 @@ const Register = () => {
 
   return (
     <div id="register">
-      <h2>ReactGram</h2>
+      <h2>React_IG</h2>
       <p className="subtitle">Register to start interacting with other people.</p>
       <form onSubmit={handleSubmit}>
         <input

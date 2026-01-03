@@ -37,7 +37,7 @@ const Login = () => {
 
   return (
     <div id="login">
-      <h2>ReactGram</h2>
+      <h2>React_IG</h2>
       <p className="subtitle">Login to check what's new.</p>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} value={email || ""}/>
