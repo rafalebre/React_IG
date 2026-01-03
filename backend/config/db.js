@@ -1,11 +1,10 @@
 const mongoose = require("mongoose")
-const dbUser = process.env.DB_USER;
-const dbPassword = process.env.DB_PASS;
 
 const conn = async () => {
     try {
-        const dbConn = await mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.swrimmv.mongodb.net/?retryWrites=true&w=majority`)
-        console.log("Conectou ao banco!")
+        // Usando MongoDB local para desenvolvimento
+        const dbConn = await mongoose.connect('mongodb://localhost:27017/react_ig')
+        console.log("Conectou ao banco local!")
 
         return dbConn
     } catch (error) {

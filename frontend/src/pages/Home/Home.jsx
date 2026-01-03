@@ -3,6 +3,7 @@ import "./Home.css"
 // Components
 import LikeContainer from "../../components/LikeContainer"
 import PhotoItem from "../../components/PhotoItem"
+import Loading from "../../components/Loading"
 import { Link } from "react-router-dom"
 
 // hooks
@@ -35,7 +36,7 @@ const Home = () => {
   }
 
   if(loading) {
-    return <p>Loading...</p>
+    return <Loading />
   }
 
   return (

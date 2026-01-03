@@ -9,6 +9,7 @@ import { useAuth } from './hooks/useAuth';
 // Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Loading from './components/Loading';
 
 // Pages
 import Home from './pages/Home/Home';
@@ -24,7 +25,7 @@ function App() {
   const {auth, loading} = useAuth()
 
   if(loading) {
-    return <p>Loading...</p>
+    return <Loading />
   }
 
   return (

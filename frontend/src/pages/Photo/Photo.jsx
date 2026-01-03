@@ -4,6 +4,7 @@ import { uploads } from "../../utils/config"
 
 // components
 import Message from "../../components/Message"
+import Loading from "../../components/Loading"
 import { Link } from "react-router-dom"
 import PhotoItem from "../../components/PhotoItem"
 
@@ -57,7 +58,7 @@ const Photo = () => {
   }
 
   if (loading) {
-    return <p>Loading...</p>
+    return <Loading />
   }
 
 

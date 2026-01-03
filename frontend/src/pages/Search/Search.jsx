@@ -9,6 +9,7 @@ import { useQuery } from "../../hooks/useQuery"
 // components
 import LikeContainer from "../../components/LikeContainer"
 import PhotoItem from "../../components/PhotoItem"
+import Loading from "../../components/Loading"
 import { Link } from "react-router-dom"
 
 // Redux
@@ -40,7 +41,7 @@ const Search = () => {
     }
   
     if(loading) {
-      return <p>Loading...</p>
+      return <Loading />
     }
 
   return (

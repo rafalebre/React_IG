@@ -8,13 +8,9 @@ const insertPhoto = async (req, res) => {
   const { title } = req.body;
   const image = req.file.filename;
 
-  console.log(req.body);
-
   const reqUser = req.user;
 
   const user = await User.findById(reqUser._id);
-
-  console.log(user.name);
 
   // Create photo
   const newPhoto = await Photo.create({
@@ -27,7 +23,7 @@ const insertPhoto = async (req, res) => {
   // If user was photo sucessfully, return data
   if (!newPhoto) {
     res.status(422).json({
-      errors: ["There's been an error, please try againa later."],
+      errors: ["There's been an error, please try again later."],
     });
     return;
   }
@@ -53,7 +49,7 @@ const deletePhoto = async (req, res) => {
   if (!photo.userId.equals(reqUser._id)) {
     res
       .status(422)
-      .json({ errors: ["There's been an error, please try againa later."] });
+      .json({ errors: ["There's been an error, please try again later."] });
     return;
   }
 
