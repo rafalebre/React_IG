@@ -106,6 +106,18 @@ export const like = createAsyncThunk(
     }
 )
 
+// Unlike a photo
+export const unlike = createAsyncThunk(
+    "photo/unlike",
+    async (id, thunkAPI) => {
+        const token = thunkAPI.getState().auth.user.token
+
+        const data = await photoService.unlike(id, token)
+
+        return data
+    }
+)
+
 // Add comment to a photo
 export const comment = createAsyncThunk(
     "photo/comment",
@@ -255,6 +267,31 @@ export const photoSlice = createSlice({
                 state.message = action.payload.message;
             })
             .addCase(like.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+            .addCase(unlike.fulfilled, (state, action) => {
+                state.loading = false
+                state.success = true
+                state.error = null
+
+                if(state.photo.likes) {
+                    state.photo.likes = state.photo.likes.filter(
+                        (userId) => userId !== action.payload.userId
+                    )
+                }
+
+                state.photos.map((photo) => {
+                    if (photo._id === action.payload.photoId) {
+                        photo.likes = photo.likes.filter(
+                            (userId) => userId !== action.payload.userId
+                        )
+                    }
+                    return photo
+                })
+                state.message = action.payload.message;
+            })
+            .addCase(unlike.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
             })

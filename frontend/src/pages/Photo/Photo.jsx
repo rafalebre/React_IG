@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom"
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage"
 
 // Redux
-import { getPhoto, like, comment } from "../../slices/photoSlice"
+import { getPhoto, like, unlike, comment } from "../../slices/photoSlice"
 import LikeContainer from "../../components/LikeContainer"
 
 
@@ -42,6 +42,12 @@ const Photo = () => {
     resetMessage()
   }
 
+  // Insert an unlike
+  const handleUnlike = () => {
+    dispatch(unlike(photo._id))
+    resetMessage()
+  }
+
   // Insert a comment
   const handleComment = (e) => {
     e.preventDefault()
@@ -65,7 +71,7 @@ const Photo = () => {
   return (
     <div id="photo">
       <PhotoItem photo={photo} />
-      <LikeContainer photo={photo} user={user} handleLike={handleLike} />
+      <LikeContainer photo={photo} user={user} handleLike={handleLike} handleUnlike={handleUnlike} />
       <div className="message-container">
         {error && <Message msg={error} type="error" />}
         {message && <Message msg={message} type="success" />}

@@ -13,7 +13,7 @@ import Loading from "../../components/Loading"
 import { Link } from "react-router-dom"
 
 // Redux
-import { searchPhotos, like } from "../../slices/photoSlice"
+import { searchPhotos, like, unlike } from "../../slices/photoSlice"
 
 const Search = () => {
   const query = useQuery()
@@ -39,6 +39,13 @@ const Search = () => {
   
       resetMessage()
     }
+
+    // Unlike a photo
+    const handleUnlike = (photo) => {
+      dispatch(unlike(photo._id))
+  
+      resetMessage()
+    }
   
     if(loading) {
       return <Loading />
@@ -50,7 +57,7 @@ const Search = () => {
       {photos && photos.map((photo) => (
         <div key={photo._id}>
         <PhotoItem photo={photo} />
-        <LikeContainer photo={photo} user={user} handleLike={handleLike} />
+        <LikeContainer photo={photo} user={user} handleLike={handleLike} handleUnlike={handleUnlike} />
         <Link className="btn" to={`/photos/${photo._id}`} >View more</Link>
       </div>
       ))}

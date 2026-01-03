@@ -4,6 +4,24 @@
 
 React IG is a simple social media platform inspired by Instagram, built to demonstrate my progress in learning React, Redux, and MongoDB. Users can post photos, share and like friends' photos, and add comments. This project provided me with the opportunity to practice using React with Redux for state management and MongoDB for the database, applying CSS effectively across different components, and experimenting with React's routing and hooks.
 
+## Important: Node.js Version Requirement
+
+**This project requires Node.js version 20.x (LTS)**
+
+The project dependencies are incompatible with Node.js 25+. To ensure compatibility:
+
+1. Install NVM (Node Version Manager) if you haven't:
+   ```bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+   ```
+
+2. The project includes `.nvmrc` files in both `backend/` and `frontend/` directories that specify Node 20.
+
+3. When working on this project, simply run `nvm use` in either the backend or frontend directory, and it will automatically switch to Node 20.
+
+**Why Node 20?**
+Some dependencies (like `buffer-equal-constant-time` used by JWT libraries) are not compatible with Node.js 25+. Node 20 is the LTS (Long Term Support) version and provides the best stability for this project.
+
 ## Installation
 
 **Prerequisites:**
@@ -33,8 +51,20 @@ React IG is a simple social media platform inspired by Instagram, built to demon
 ## Usage
 
 To run the application:
-- Start the backend server: `cd backend` then `npm run server`
-- In a new terminal, start the frontend application: `cd frontend` then `npm start`
+
+**Backend:**
+```bash
+cd backend
+nvm use    # Automatically switches to Node 20
+npm start
+```
+
+**Frontend (in a new terminal):**
+```bash
+cd frontend
+nvm use    # Automatically switches to Node 20
+npm start
+```
 
 ## Technologies Used
 

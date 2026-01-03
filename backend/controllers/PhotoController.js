@@ -154,6 +154,35 @@ const likePhoto = async (req, res) => {
   res.status(200).json({ photoId: id, userId: reqUser._id, message: "You liked the picture." })
 }
 
+// Unlike functionality
+const unlikePhoto = async (req, res) => {
+
+  const { id } = req.params
+
+  const reqUser = req.user
+
+  const photo = await Photo.findById(id)
+
+  //Check if photo exists
+  if (!photo) {
+    res.status(404).json({ errors: ["Picture not found."] })
+    return
+  }
+
+  // Check if user has liked the photo
+  if (!photo.likes.includes(reqUser._id)) {
+    res.status(422).json({ errors: "You haven't liked this photo." })
+    return
+  }
+
+  // Remove user id from likes array
+  photo.likes = photo.likes.filter((userId) => !userId.equals(reqUser._id))
+
+  await photo.save()
+
+  res.status(200).json({ photoId: id, userId: reqUser._id, message: "You unliked the picture." })
+}
+
 // Comment functionality
 const commentPhoto = async (req, res) => {
 
@@ -209,6 +238,7 @@ module.exports = {
   getPhotoById,
   updatePhoto,
   likePhoto,
+  unlikePhoto,
   commentPhoto,
   searchPhotos
 };

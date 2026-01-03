@@ -108,6 +108,25 @@ const like = async (id, token) => {
     }
 }
 
+// Unlike a photo
+const unlike = async (id, token) => {
+
+    const config = requestConfig("PUT", null, token)
+
+    try {
+
+        const res = await fetch(api + "/photos/unlike/" + id, config)
+            .then((res) => res.json())
+            .catch((err) => err)
+
+        return res
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 // Add comment to a photo
 const comment = async (data, id, token) => {
@@ -173,6 +192,7 @@ const photoService = {
     updatePhoto,
     getPhoto,
     like,
+    unlike,
     comment,
     getPhotos,
     searchPhotos,

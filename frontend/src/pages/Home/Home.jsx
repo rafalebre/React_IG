@@ -12,7 +12,7 @@ import {useSelector, useDispatch} from "react-redux"
 import {useResetComponentMessage} from "../../hooks/useResetComponentMessage"
 
 // Redux
-import { getPhotos, like } from "../../slices/photoSlice"
+import { getPhotos, like, unlike } from "../../slices/photoSlice"
 
 const Home = () => {
 
@@ -35,6 +35,13 @@ const Home = () => {
     resetMessage()
   }
 
+  // Unlike a photo
+  const handleUnlike = (photo) => {
+    dispatch(unlike(photo._id))
+
+    resetMessage()
+  }
+
   if(loading) {
     return <Loading />
   }
@@ -44,7 +51,7 @@ const Home = () => {
       {photos && Array.isArray(photos) && photos.map((photo) => (
       <div key={photo._id}>
         <PhotoItem photo={photo} />
-        <LikeContainer photo={photo} user={user} handleLike={handleLike} />
+        <LikeContainer photo={photo} user={user} handleLike={handleLike} handleUnlike={handleUnlike} />
         <Link className="btn" to={`/photos/${photo._id}`} >View more</Link>
       </div>)
       )}
