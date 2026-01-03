@@ -62,9 +62,9 @@ const Profile = () => {
     // build form data
     const formData = new FormData()
 
-    const userFormData = Object.keys(userData).forEach((key) => formData.append(key, userData[key]))
-
-    formData.append("user", userFormData)
+    Object.keys(userData).forEach((key) => 
+      formData.append(key, userData[key])
+    )
 
     await dispatch(updateProfile(formData))
 

@@ -190,7 +190,13 @@ const handleCancelEdit = (e) => {
                   <BsPencilFill onClick={() => handleEdit(photo)} />
                   <BsXLg onClick={() => handleDelete(photo._id)} />
                 </div>
-              ) : (<Link className="btn" to={`/photos/${photo._id}`} >See</Link>) }
+              ) : (
+                <div className="actions">
+                  <Link to={`/photos/${photo._id}`}>
+                    <BsFillEyeFill />
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
           {photos.length === 0 && <p>There are no pictures posted yet.</p> }
