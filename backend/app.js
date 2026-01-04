@@ -12,8 +12,11 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-// solve CORS
-app.use(cors({ credentials: true, origin: true}))
+// solve CORS - Only allow requests from Vercel deployment
+app.use(cors({ 
+    credentials: true, 
+    origin: 'https://react-ig-nu.vercel.app'
+}))
 
 // Upload directory
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")))
