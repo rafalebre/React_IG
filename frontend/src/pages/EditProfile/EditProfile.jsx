@@ -1,6 +1,6 @@
 import "./EditProfile.css";
 
-import { uploads } from "../../utils/config";
+import { getImageUrl } from "../../utils/config";
 
 // Hooks
 import { useEffect, useState } from "react";
@@ -91,7 +91,7 @@ const Profile = () => {
       {(user.profileImage || previewImage) && (
         <img className="profile-image"
           src={
-            previewImage ? URL.createObjectURL(previewImage) : `${uploads}/users/${user.profileImage}`
+            previewImage ? URL.createObjectURL(previewImage) : getImageUrl(user.profileImage, 'users')
           }
           alt={user.name}
         />

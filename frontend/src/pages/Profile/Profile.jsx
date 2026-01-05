@@ -1,6 +1,6 @@
 import "./Profile.css"
 
-import { uploads } from "../../utils/config"
+import { getImageUrl } from "../../utils/config"
 
 // components
 import Message from "../../components/Message"
@@ -130,7 +130,7 @@ const handleCancelEdit = (e) => {
     <div id="profile">
       <div className="profile-header">
         {user.profileImage && (
-          <img src={`${uploads}/users/${user.profileImage}`} alt={user.name} />
+          <img src={getImageUrl(user.profileImage, 'users')} alt={user.name} />
         )}
         <div className="profile-description">
           <h2>{user.name}</h2>
@@ -157,7 +157,7 @@ const handleCancelEdit = (e) => {
           <div className="edit-photo hide" ref={editPhotoForm}>
             <p>Editing:</p>
             {editImage && (
-              <img src={`${uploads}/photos/${editImage}`} alt={editTitle} />
+              <img src={getImageUrl(editImage, 'photos')} alt={editTitle} />
             )}
             <form onSubmit={handleUpdate}>
               <input
@@ -181,7 +181,7 @@ const handleCancelEdit = (e) => {
         <div className="photos-container">
           {photos && photos.map((photo) => (
             <div className="photo" key={photo._id}>
-              {photo.image && (<img src={`${uploads}/photos/${photo.image}`} alt={photo.title} />)}
+              {photo.image && (<img src={getImageUrl(photo.image, 'photos')} alt={photo.title} />)}
               {id === userAuth._id ? (
                 <div className="actions">
                   <Link to={`/photos/${photo._id}`}>

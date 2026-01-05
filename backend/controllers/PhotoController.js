@@ -1,34 +1,46 @@
 const Photo = require("../models/Photo");
 const User = require("../models/User")
+const cloudinary = require("../config/cloudinary");
+const fs = require("fs");
 
 const mongoose = require("mongoose");
 
 // Insert a photo, with an user related to it
 const insertPhoto = async (req, res) => {
   const { title } = req.body;
-  const image = req.file.filename;
-
   const reqUser = req.user;
 
-  const user = await User.findById(reqUser._id);
-
-  // Create photo
-  const newPhoto = await Photo.create({
-    image,
-    title,
-    userId: user._id,
-    userName: user.name,
-  });
-
-  // If user was photo sucessfully, return data
-  if (!newPhoto) {
-    res.status(422).json({
-      errors: ["There's been an error, please try again later."],
+  try {
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'react_ig/photos'
     });
-    return;
-  }
 
-  res.status(201).json(newPhoto);
+    // Delete local file after upload
+    fs.unlinkSync(req.file.path);
+
+    const user = await User.findById(reqUser._id);
+
+    // Create photo with Cloudinary URL
+    const newPhoto = await Photo.create({
+      image: result.secure_url,
+      title,
+      userId: user._id,
+      userName: user.name,
+    });
+
+    if (!newPhoto) {
+      res.status(422).json({
+        errors: ["There's been an error, please try again later."],
+      });
+      return;
+    }
+
+    res.status(201).json(newPhoto);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ errors: ["Error uploading photo."] });
+  }
 };
 
 // Remove a photo from the DB

@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const cloudinary = require("../config/cloudinary");
+const fs = require("fs");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -91,10 +93,6 @@ const update = async (req, res) => {
 
     let profileImage = null
 
-    if (req.file) {
-        profileImage = req.file.filename
-    }
-
     const reqUser = req.user
 
     try {
@@ -116,8 +114,16 @@ const update = async (req, res) => {
             user.password = passwordHash
         }
 
-        if (profileImage) {
-            user.profileImage = profileImage
+        if (req.file) {
+            // Upload to Cloudinary
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'react_ig/users'
+            });
+
+            // Delete local file after upload
+            fs.unlinkSync(req.file.path);
+
+            user.profileImage = result.secure_url
         }
 
         if (bio) {

@@ -1,6 +1,6 @@
 import "./Photo.css"
 
-import { uploads } from "../../utils/config"
+import { getImageUrl } from "../../utils/config"
 
 // components
 import Message from "../../components/Message"
@@ -90,7 +90,7 @@ const Photo = () => {
               <div className="comment" key={comment.comment} >
                 <div className="author">
                   {comment.userImage && (
-                    <img src={`${uploads}/users/${comment.userImage}`} alt={comment.userName} />
+                    <img src={getImageUrl(comment.userImage, 'users')} alt={comment.userName} />
                   )}
                   <Link to={`/users/${comment.userId}`} >
                     <p>{comment.userName}</p>
