@@ -137,6 +137,25 @@ export const comment = createAsyncThunk(
     }
 )
 
+// Delete a comment from a photo
+export const deleteComment = createAsyncThunk(
+    "photo/deletecomment",
+    async(commentData, thunkAPI) => {
+
+        const token = thunkAPI.getState().auth.user.token
+
+        const data = await photoService.deleteComment(commentData.photoId, commentData.commentId, token)
+
+         // Check for errors
+         if (data.errors) {
+            return thunkAPI.rejectWithValue(data.errors[0])
+        }
+
+        return data        
+
+    }
+)
+
 // Get all photos
 export const getPhotos = createAsyncThunk(
     "photo/getall",
@@ -305,6 +324,21 @@ export const photoSlice = createSlice({
                 state.message = action.payload.message;
             })
             .addCase(comment.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+            .addCase(deleteComment.fulfilled, (state, action) => {
+                state.loading = false
+                state.success = true
+                state.error = null
+
+                state.photo.comments = state.photo.comments.filter(
+                    (comment) => comment._id !== action.payload.commentId
+                )
+                
+                state.message = action.payload.message;
+            })
+            .addCase(deleteComment.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
             })

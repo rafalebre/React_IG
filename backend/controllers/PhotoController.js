@@ -232,6 +232,56 @@ const commentPhoto = async (req, res) => {
 
 }
 
+// Delete comment functionality
+const deleteComment = async (req, res) => {
+  const { id, commentId } = req.params
+  const reqUser = req.user
+
+  try {
+    const photo = await Photo.findById(id)
+
+    // Check if photo exists
+    if (!photo) {
+      res.status(404).json({ errors: ["Picture not found."] })
+      return
+    }
+
+    // Find the comment
+    const commentIndex = photo.comments.findIndex(
+      (c) => c._id.toString() === commentId
+    )
+
+    if (commentIndex === -1) {
+      res.status(404).json({ errors: ["Comment not found."] })
+      return
+    }
+
+    const comment = photo.comments[commentIndex]
+
+    // Check if user is comment owner OR photo owner
+    if (
+      !comment.userId.equals(reqUser._id) &&
+      !photo.userId.equals(reqUser._id)
+    ) {
+      res.status(403).json({ errors: ["Access denied."] })
+      return
+    }
+
+    // Remove comment
+    photo.comments.splice(commentIndex, 1)
+    await photo.save()
+
+    res.status(200).json({
+      photoId: id,
+      commentId,
+      message: "Comment deleted successfully."
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ errors: ["Error deleting comment."] })
+  }
+}
+
 // Seach photos by title
 const searchPhotos = async(req, res) => {
 
@@ -252,5 +302,6 @@ module.exports = {
   likePhoto,
   unlikePhoto,
   commentPhoto,
+  deleteComment,
   searchPhotos
 };

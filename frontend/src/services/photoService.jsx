@@ -147,6 +147,25 @@ const comment = async (data, id, token) => {
 
 }
 
+// Delete a comment from a photo
+const deleteComment = async (photoId, commentId, token) => {
+
+    const config = requestConfig("DELETE", null, token)
+
+    try {
+
+        const res = await fetch(api + "/photos/comment/" + photoId + "/" + commentId, config)
+            .then((res) => res.json())
+            .catch((err) => err)
+
+        return res
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 // get all photos
 const getPhotos = async (token) => {
 
@@ -194,6 +213,7 @@ const photoService = {
     like,
     unlike,
     comment,
+    deleteComment,
     getPhotos,
     searchPhotos,
 }

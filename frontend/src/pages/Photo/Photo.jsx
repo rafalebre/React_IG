@@ -7,6 +7,7 @@ import Message from "../../components/Message"
 import Loading from "../../components/Loading"
 import { Link } from "react-router-dom"
 import PhotoItem from "../../components/PhotoItem"
+import { BsTrash } from "react-icons/bs"
 
 // hooks
 import { useEffect, useState } from "react"
@@ -15,7 +16,7 @@ import { useParams } from "react-router-dom"
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage"
 
 // Redux
-import { getPhoto, like, unlike, comment } from "../../slices/photoSlice"
+import { getPhoto, like, unlike, comment, deleteComment } from "../../slices/photoSlice"
 import LikeContainer from "../../components/LikeContainer"
 
 
@@ -63,6 +64,16 @@ const Photo = () => {
     resetMessage()
   }
 
+  // Delete a comment
+  const handleDeleteComment = (commentId) => {
+    const commentData = {
+      photoId: photo._id,
+      commentId
+    }
+    dispatch(deleteComment(commentData))
+    resetMessage()
+  }
+
   if (loading) {
     return <Loading />
   }
@@ -95,6 +106,13 @@ const Photo = () => {
                   <Link to={`/users/${comment.userId}`} >
                     <p>{comment.userName}</p>
                   </Link>
+                  {user && (user._id === comment.userId || user._id === photo.userId) && (
+                    <BsTrash 
+                      onClick={() => handleDeleteComment(comment._id)} 
+                      style={{ cursor: 'pointer', marginLeft: '1em', color: '#999' }}
+                      title="Delete comment"
+                    />
+                  )}
                 </div>
                 <p>{comment.comment}</p>
               </div>
