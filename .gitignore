@@ -1,0 +1,36 @@
+# macOS metadata files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build outputs
+build/
+dist/
+*/build/
+*/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
