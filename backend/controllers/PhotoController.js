@@ -225,8 +225,11 @@ const commentPhoto = async (req, res) => {
 
   await photo.save()
 
+  // Get the last comment (with MongoDB-generated _id)
+  const addedComment = photo.comments[photo.comments.length - 1]
+
   res.status(200).json({
-    comment: userComment,
+    comment: addedComment,
     message: "The comment was added successfully."
   })
 
